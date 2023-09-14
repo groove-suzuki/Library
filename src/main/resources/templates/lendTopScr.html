@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html　xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>貸出画面</title>
+</head>
+
+<body>
+	<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+	<script src="lendTopScr.js"></script>
+
+
+	<div><strong>貸出画面</strong></div>
+	<br>
+	<div>貸出、返却規則</div>
+	<ur>
+		<li>返却期限は貸出日から一週間。</li>
+		<li>同時に5冊まで貸出可能。</li>
+		<li>期日を過ぎている場合は延滞と表示される。</li>
+		<li>延滞をした場合は、書籍の貸出を利用することができない。</li>
+	</ur>
+	<br>
+
+	<form action="/lendTopScr" name="topAction" method="post">
+
+		<table border="2" id="inputTable">
+			<caption><strong>"書籍番号、書籍枝番号入力欄"</strong></caption>
+			<thead>
+				<tr>
+					<td>冊数</td>
+					<td>書籍番号</td>
+					<td>書籍枝番号</td>
+				</tr>
+			</thead>
+			<tbody></tbody>
+		</table>
+		<div>
+			<ul id="errorMsgContainer">
+
+			</ul>
+		</div>
+		<input type="button" value="貸出" disabled id="lendButton">
+		<button type="button" onclick="goBack()">戻る</button>
+		<br>
+		<input type="hidden" th:value="${tosyoCardId}" th:name="tosyoCardId" id="tosyoCardId">
+		<input type="hidden" th:value="${lendableBooks}" th:id="lendableBooks">
+		<input type="hidden" id="bookNum" name="bookNum">
+		<input type="hidden" id="bookSubNum" name="bookSubNum">
+		<div id="tableContainer"></div>
+		<br>
+		<div id="buttonContainer"></div>
+	</form>
+
+</body>
+
+</html>

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>貸出、返却選択画面</title>
+</head>
+
+<body onload="actButton()">
+	<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+	<script type="text/javascript" src="./selectScr.js"></script>
+
+	<div><strong>貸出、返却選択画面</strong></div>
+
+	<form action="/SELECTSCREEN" name="selectScreen" method="post">
+
+		<p><strong>"図書カード番号":<span th:text="${tosyoCardId}"></span></strong></p>
+		<p><strong>"利用者名":<span th:text="${userName}"></span></strong></p>
+
+		<div th:if="${!#lists.isEmpty(lendStatus)}">
+
+			<table border="1">
+				<caption><strong>"現在の貸出状況"</strong></caption>
+
+				<thead>
+					<tr>
+						<th>書籍名</th>
+						<th>書籍番号</th>
+						<th>書籍枝番号</th>
+						<th>返却日</th>
+					</tr>
+				</thead>
+
+				<tbody id="lendTable">
+					<tr th:each="lendStatus,status : ${lendStatus}">
+						<td th:text="${lendStatus.bookName}" th:id="'bookName-' + ${status.index}"></td>
+						<td th:text="${lendStatus.bookNum}" th:id="'bookNum-' + ${status.index}"></td>
+						<td th:text="${lendStatus.bookBranchNum}" th:id="'bookBranchNum-' + ${status.index}"></td>
+						<td th:text="${lendStatus.returnDate}" th:id="'returnDate-' + ${status.index}"></td>
+					</tr>
+				</tbody>
+			</table>
+			<br>
+		</div>
+
+		<div th:if="${#lists.isEmpty(lendStatus)}">
+			<p>現在貸出している書籍はありません</p>
+		</div>
+
+		<div th:if="${!#lists.isEmpty(delayMsg)}" th:each="msg : ${delayMsg}">
+			<p th:text="${msg}"></p>
+		</div>
+
+		<span>
+			<input type="button" value="貸出" disabled id="lendButton" onclick="changeAction('/passLend')">
+			<input type="button" value="返却" disabled id="returnButton">
+		</span>
+		<br>
+		<button type="button" onclick="goBack()">戻る</button>
+
+		<div id="tableCtr"></div>
+		<span>
+			<div id="selectAllButtonCtr"></div>
+			<div id="deselectAllButtonCtr"></div>
+		</span>
+		<div id="nextButtonCtr"></div>
+
+		<input type="hidden" th:value="${tosyoCardId}" th:name="tosyoCardId" th:id="tosyoCardId">
+		<input type="hidden" th:value="${lendableBooks}" th:name="lendableBooks" th:id="lendableBooks">
+		<input type="hidden" th:value="${lendStatus}" id="lendStatus">
+		<input type="hidden" th:value="${delayMsg}" th:id="delayMsg">
+		<input type="hidden" id="bookNums" name="bookNums">
+		<input type="hidden" id="bookSubNums" name="bookSubNums">
+	</form>
+	<br>
+
+</body>
+
+</html>

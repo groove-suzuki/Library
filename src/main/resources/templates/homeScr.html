@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>書籍の貸出、返却トップ画面</title>
+</head>
+<style>
+
+</style>
+
+<body>
+	<script type="text/javascript" src="./homeScr.js">
+
+	</script>
+
+	<div><strong>書籍の貸出、返却トップ画面</strong></div>
+
+	<form action="/homeScr" method="post">
+
+		<br>
+		<div><Strong>貸出、返却規則</Strong></div>
+		<ur>
+			<li>返却期限は貸出日から一週間。</li>
+			<li>同時に5冊まで貸出可能。</li>
+			<li>期日を過ぎている場合は延滞と表示される。</li>
+			<li>延滞をした場合は、書籍の貸出を利用することができない。</li>
+		</ur>
+		<br>
+
+		<div>図書カード番号:<input type="text" name="tosyoCardId" id="tosyoCardId" onchange="judgeNull()">
+		</div>
+		<div th:if="${!#lists.isEmpty(errorMsg)}" th:each="msg : ${errorMsg}">
+			<p th:text="${msg}"></p>
+		</div>
+		<br>
+		<div><input type="submit" value="次へ" disabled id="nextButton"></div>
+
+	</form>
+</body>
+
+</html>

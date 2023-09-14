@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>貸出完了画面</title>
+</head>
+
+<body>
+	<script type="text/javascript">
+		//トップへ戻るボタン押下時に初期画面に遷移する関数
+		function backIniScr() {
+			window.location.href = "http://localhost:8080/Top";
+		}
+	</script>
+	<p>返却完了しました</p>
+	<div th:if="${#lists.isEmpty(lendStatus)}">
+		<p>現在貸出している書籍はありません</p>
+	</div>
+
+	<div th:if="${!#lists.isEmpty(lendStatus)}">
+		<table border="2">
+			<caption><Strong>現在貸出している書籍</Strong></caption>
+			<thead>
+				<tr>
+					<th>書籍名</th>
+					<th>書籍番号</th>
+					<th>書籍枝番号</th>
+					<th>返却日</th>
+				</tr>
+			</thead>
+
+			<tbody>
+				<tr th:each="lendStatus : ${lendStatus}">
+					<td th:text="${lendStatus.bookName}"></td>
+					<td th:text="${lendStatus.bookNum}"></td>
+					<td th:text="${lendStatus.bookBranchNum}"></td>
+					<td th:text="${lendStatus.returnDate}"></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<br>
+	<button type="button" onclick="backIniScr()">トップへ戻る</button>
+</body>
+
+</html>
